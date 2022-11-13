@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const {parse} = require("csv-parse");
 
-const isHabitablePlanets = [];
+const habitablePlanets = [];
 
 function isHabitablePlanet(planet) {
   return (
@@ -26,7 +26,7 @@ function loadPlanetsData() {
       )
       .on("data", (data) => {
         if (isHabitablePlanet(data)) {
-          isHabitablePlanets.push(data);
+          habitablePlanets.push(data);
         }
       })
       .on("error", (err) => {
@@ -39,13 +39,17 @@ function loadPlanetsData() {
         //     return planet["kepler_name"];
         //   })
         // );
-        console.log(`${isHabitablePlanets.length} habitable planets found`);
+        console.log(`${habitablePlanets.length} habitable planets found`);
         resolve();
       });
   });
 }
 
+function getAllPlanets(){
+  return habitablePlanets
+}
+
 module.exports = {
   loadPlanetsData,
-  planets: isHabitablePlanets,
+  getAllPlanets,
 };
